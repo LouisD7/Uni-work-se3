@@ -1,0 +1,2 @@
+These are alternative words to be analysed
+These are different to those added in the other text files, allowing different tests to be performed against the dictionary.

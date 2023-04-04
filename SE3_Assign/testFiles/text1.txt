@@ -1,0 +1,3 @@
+These are some words to be analysed
+Some of these words will be in a dictionary,
+and some words will occur multiple times.
