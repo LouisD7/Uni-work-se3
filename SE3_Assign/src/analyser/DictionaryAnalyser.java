@@ -16,9 +16,9 @@ import java.util.HashSet;
 public class DictionaryAnalyser extends BaseAnalyser {
 
 	// TODO::Part2 add missing attributes (use UML model to identify these)
-	Set<String> dictionary = new HashSet<String>();
-	Set<String> unknownWords = new HashSet<String>();
-	Set<String> knownWords = new HashSet<String>();
+	private Set<String> dictionary = new HashSet<String>();
+	private Set<String> unknownWords = new HashSet<String>();
+	private Set<String> knownWords = new HashSet<String>();
 
 	////////////////////////////////////////////////////////////////////
 
@@ -48,34 +48,42 @@ public class DictionaryAnalyser extends BaseAnalyser {
 
 		String nextLine = null;	// TODO:Part2 read the next line from the file
 
-		while ((nextLine = reader.readLine())!= null) {
-
-			// TODO:Part2 process and store each word
-			nextLine.trim();
+		/**
+		 * this while loop assigns the nextLine attribute to the next line of the file 
+		 * and then checks if the next line exists or isn't empty before going into the while loop
+		 */
+		while ((nextLine = reader.readLine()) != null) {
+			// this trim trims any lines of white spaces
+			nextLine = nextLine.trim();
+			//if statement checks the length of the trimmed line if not larger than 0 the line was just blank and doesn't get added
 			if(nextLine.length() > 0) {
-				nextLine.toLowerCase();
-				System.out.println(nextLine);
+				nextLine = nextLine.toLowerCase();
 				dictionary.add(nextLine);
 			}
 		}
-
 		reader.close();
 	}
 	
 	@Override
 	public void performAnalysis(String filename) throws IOException {
 
-		// TODO:Part2 clear existing known and unknown word collections.
-		
+		// clears the two sets of any known or unknown words.
+		knownWords.clear();
+		unknownWords.clear();
 		selectInputFile(filename);	// select the file to be analysed
 
-		String nextWord = readNextWord();
+		String nextWord = null;
 
 		// process all available words
-		while (nextWord != null) {
-
+		while ((nextWord = readNextWord()) != null) {
 			// TODO:Part2 identify whether next word is within the dictionary
-			// if it is then record as a known word, otherwise record as an unknown word.
+			// if true then record as a known word, otherwise record as an unknown word.
+			if(dictionary.contains(nextWord)) {
+				knownWords.add(nextWord);
+			}
+			else {
+				unknownWords.add(nextWord);
+			}
 		}
 	}
 
