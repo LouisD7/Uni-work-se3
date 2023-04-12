@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Set;
+import java.util.HashSet;
 
 /**
  * A kind of {@link BaseAnalyser} that identifies whether words are present
@@ -15,7 +16,9 @@ import java.util.Set;
 public class DictionaryAnalyser extends BaseAnalyser {
 
 	// TODO::Part2 add missing attributes (use UML model to identify these)
-	
+	Set<String> dictionary = new HashSet<String>();
+	Set<String> unknownWords = new HashSet<String>();
+	Set<String> knownWords = new HashSet<String>();
 
 	////////////////////////////////////////////////////////////////////
 
@@ -45,9 +48,15 @@ public class DictionaryAnalyser extends BaseAnalyser {
 
 		String nextLine = null;	// TODO:Part2 read the next line from the file
 
-		while (nextLine != null) {
+		while ((nextLine = reader.readLine())!= null) {
 
 			// TODO:Part2 process and store each word
+			nextLine.trim();
+			if(nextLine.length() > 0) {
+				nextLine.toLowerCase();
+				System.out.println(nextLine);
+				dictionary.add(nextLine);
+			}
 		}
 
 		reader.close();
@@ -86,6 +95,7 @@ public class DictionaryAnalyser extends BaseAnalyser {
 	public void clearDictionary() {
 
 		// TODO:Part2 clear the dictionary contents
+		dictionary.clear();
 	}
 	
 	/**
@@ -94,7 +104,7 @@ public class DictionaryAnalyser extends BaseAnalyser {
 	 */
 	public Set<String> getDictionary() {
 
-		return null;	// TODO:Part2 return appropriate attribute
+		return dictionary;	// TODO:Part2 return appropriate attribute
 	}
 
 	/**
@@ -103,7 +113,7 @@ public class DictionaryAnalyser extends BaseAnalyser {
 	 */
 	public Set<String> getKnownWords() {
 
-		return null;	// TODO:Part2 return appropriate attribute
+		return knownWords;	// TODO:Part2 return appropriate attribute
 	}
 
 	/**
@@ -112,7 +122,7 @@ public class DictionaryAnalyser extends BaseAnalyser {
 	 */
 	public Set<String> getUnknownWords() {
 
-		return null;	// TODO:Part2 return appropriate attribute
+		return unknownWords;	// TODO:Part2 return appropriate attribute
 	}
 
 	//////////////////////////////////////////////////////////////////
