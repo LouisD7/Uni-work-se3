@@ -2,6 +2,7 @@ package analyser;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.LinkedHashMap;
 
 /**
  * A kind of {@link BaseAnalyser} that counts the number of unique word
@@ -11,23 +12,32 @@ import java.io.PrintStream;
  */
 public class WordFrequencyAnalyser extends BaseAnalyser  {
 
-	// TODO::Part3 add missing attributes (use UML model to identify these)
-
+	/**
+	 * Here i used a linked hash map to record the order the elements were added into the
+	 * hashmap as this allows the condition for the if there are multiple words with the most occurrences
+	 * the first most recorded word is returned.
+	 */
+	LinkedHashMap<String, Integer> wordCount = new LinkedHashMap<>();
 	//////////////////////////////////////////////////////////////////
 
 	@Override
 	public void performAnalysis(String filename) throws IOException {
 
-		// TODO:Part3 clear the word count
-
+		// clear the word count
+		wordCount.clear();
 		selectInputFile(filename);	// select the file to be analysed
 
-		String nextWord = readNextWord();
+		String nextWord = null;
 
-		// process all available words
-		while (nextWord != null) {
+		// process all available words this for loop goes through the provided file until there's no words left and is null
+		while ((nextWord = readNextWord())!= null) {
 			
-			// TODO:Part3 check if next word known, if so increment the occurrence count, otherwise add with a count of 1
+			//check if next word known, if so increment the occurrence count, otherwise add with a count of 1
+			if(wordCount.containsKey(nextWord)) {
+				wordCount.put(nextWord, wordCount.get(nextWord)+ 1);
+			}
+			else
+				wordCount.put(nextWord, 1);
 		}
 	}
 
@@ -52,10 +62,28 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	public String getMostPopularWord() {
 
 		int max = 0;
+		int currentCount = 0;
 		String word = "";
 		
-		// TODO:Part3 find the most popular word and return
 		
+		// TODO:Part3 find the most popular word and return
+		/**
+		 *  A for each loop that goes through each key string in the hashmap and check to see if wordCount is the highest recorded so
+		 *  at the end of the loop the word with highest count is returned. 
+		 *  This function is the same for get least popular word but obviously work inversely
+		 */
+		for(String s : wordCount.keySet()) {
+			currentCount = wordCount.get(s);
+			/**
+			 * this if statement in most of the getter methods check to if the count is bigger than currently recorded max.
+			 * Since the condition is > and not >= this means that if multiple words have the highest count the first one
+			 * recorded in the linked hash map is recorded as the most popular word
+			 */
+			if(currentCount > max) {
+				max = currentCount;
+				word = s;
+			}
+		}
 		return word;
 	}
 
@@ -69,6 +97,15 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 		int max = 0;
 		
 		// TODO:Part3 find the most popular word count and return
+		/**
+		 *  A for each loop that goes through each value in the hashmap and check to see if it is the highest recorded value so far
+		 *  at the end of the loop the highest count is returned. This function is the same for get least word count but obviously work inversely
+		 */
+		for(Integer i : wordCount.values()) {
+			if(i > max) {
+				max = i;
+			}
+		}
 
 		return max;
 	}
@@ -85,9 +122,17 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 
 		// find the least popular word
 		int min = Integer.MAX_VALUE;
+		int currentCount = 0;
 		String word = "";
 
 		// TODO:Part3 find the least popular word and return
+		for(String s : wordCount.keySet()) {
+			currentCount = wordCount.get(s);
+			if(currentCount < min) {
+				min = currentCount;
+				word = s;
+			}
+		}
 		return word;
 	}
 	
@@ -100,10 +145,16 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 
 		// find the least popular word
 		int min = Integer.MAX_VALUE;
+		int result = 0;
 
 		// TODO:Part3 find the least popular word count and return
-
-		return 0;
+		for(Integer i : wordCount.values()) {
+			if(i < min) {
+				min = i;
+				result = min;
+			}
+		}
+		return result;
 	}
 	
 	/**
@@ -113,7 +164,7 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	 */
 	public int getUniqueWordCount() {
 
-		return 0;	// TODO:Part3 return number of entries within the word count map
+		return wordCount.size();	// TODO:Part3 return number of entries within the word count map
 	}
 	
 	/**
@@ -125,7 +176,13 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	public int getCountOf(String word) {
 		
 		// TODO:Part3 lookup the word and return its count
-		return 0;
+		try {
+			return wordCount.get(word);
+		}
+		catch(java.lang.NullPointerException e){
+			return 0;
+		}
+		
 	}
 	
 
