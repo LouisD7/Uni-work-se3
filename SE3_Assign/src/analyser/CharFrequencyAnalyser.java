@@ -2,6 +2,7 @@ package analyser;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.LinkedHashMap;
 
 /**
  * A kind of {@link BaseAnalyser} that counts the number of unique individual
@@ -12,26 +13,47 @@ import java.io.PrintStream;
 public class CharFrequencyAnalyser extends BaseAnalyser {
 
 	// TODO:Part4 add missing attributes (see UML model).
-
+	private LinkedHashMap<Character, Integer> charCounts = new LinkedHashMap<>();
+	private int vowelCount = 0, singleCharCount = 0;
 	//////////////////////////////////////////////////////////////////
 
 	@Override
 	public void performAnalysis(String filename) throws IOException {
 
 		// TODO:Part4 clear map contents and re-init other attributes.
+		charCounts.clear();
+		vowelCount = 0;
+		singleCharCount = 0;
+		
 
 		selectInputFile(filename); // select the file to be analysed
 
-		String nextWord = readNextWord();
+		String nextWord = null;
 
 		// process all available words
-		while (nextWord != null) {
+		while ((nextWord = readNextWord())!= null) {
 
 			// TODO:Part4 extract each character from the next word, and add to the occurrence map
 			// TODO:Part4 check if each character is a vowel, if so increment correct attribute
-
-			// TODO:Part4 increment attribute that counts single character words (if appropriate).
+			int i = 0;
+			while(i < nextWord.length()) {
+				Character nextChar = nextWord.charAt(i);
+				if(nextChar == 'a' || nextChar == 'e' || nextChar == 'i' || nextChar == 'o' || nextChar == 'u' ) {
+					vowelCount++;
+				}
+				if(charCounts.containsKey(nextChar)) {
+					charCounts.put(nextChar, charCounts.get(nextChar)+ 1);
+				}
+				else
+					charCounts.put(nextChar, 1);
+				//increment the count of next character at the end of the loop to not change the position while doing the checks
+				i++;
+			}
+			if(nextWord.length() == 1) {
+				singleCharCount++;
+			}
 		}
+			// TODO:Part4 increment attribute that counts single character words (if appropriate).
 	}
 
 	@Override
@@ -57,9 +79,18 @@ public class CharFrequencyAnalyser extends BaseAnalyser {
 
 		// find the most popular character
 		Character character = null;
+		int max = 0;
+		int currentCount = 0;
 
 		// TODO:Part4 if highest occurrence count so far, record the character.
-
+		for(Character a : charCounts.keySet()) {
+			currentCount = charCounts.get(a);
+			
+			if(currentCount > max) {
+				max = currentCount;
+				character = a;
+			}
+		}
 		return character;
 	}
 
@@ -73,7 +104,18 @@ public class CharFrequencyAnalyser extends BaseAnalyser {
 	public int getMostPopularCharCount() {
 
 		// TODO:Part4 find the most popular character count
-		return 0;
+		int max = 0;
+		int currentCount = 0;
+
+		// TODO:Part4 if highest occurrence count so far, record the character.
+		for(Character a : charCounts.keySet()) {
+			currentCount = charCounts.get(a);
+			
+			if(currentCount > max) {
+				max = currentCount;
+			}
+		}
+		return max;
 	}
 
 	/**
@@ -83,7 +125,7 @@ public class CharFrequencyAnalyser extends BaseAnalyser {
 	 */
 	public int getUniqueCharCount() {
 
-		return 0; // TODO:Part4 return size of the map
+		return charCounts.size(); // TODO:Part4 return size of the map
 	}
 
 	/**
@@ -94,7 +136,7 @@ public class CharFrequencyAnalyser extends BaseAnalyser {
 	 */
 	public int getVowelCount() {
 
-		return 0; // TODO:Part4 return appropriate attribute
+		return vowelCount; // TODO:Part4 return appropriate attribute
 	}
 
 	/**
@@ -106,7 +148,7 @@ public class CharFrequencyAnalyser extends BaseAnalyser {
 	public int getNonVowelCount() {
 
 		// TODO:Part4 calc result and return (hint: can use getResult().getTotalChars() to get total char count).
-		return 0;
+		return getResult().getTotalChars() - vowelCount;
 	}
 
 	/**
@@ -117,7 +159,7 @@ public class CharFrequencyAnalyser extends BaseAnalyser {
 	 */
 	public int getSingleCharacterWordCount() {
 
-		return 0; // TODO:Part4 return appropriate attribute
+		return singleCharCount; // TODO:Part4 return appropriate attribute
 	}
 
 	/**
@@ -129,7 +171,7 @@ public class CharFrequencyAnalyser extends BaseAnalyser {
 	public int getMultiCharacterWordCount() {
 
 		// TODO:Part4 calc result and return (hint: can use getResult().getWordCount() to get total word count).
-		return 0;
+		return getResult().getWordCount() - singleCharCount;
 	}
 
 	/**
@@ -141,8 +183,12 @@ public class CharFrequencyAnalyser extends BaseAnalyser {
 	 *         ever appear.
 	 */
 	public int getCountOf(Character character) {
-
-		return 0; // TODO:Part4 lookup the character in the map and return the associated count value.
+		
+		if(charCounts.containsKey(character)) {
+			return charCounts.get(character);
+		}
+		else
+			return 0; // TODO:Part4 lookup the character in the map and return the associated count value.
 	}
 
 	/**

@@ -17,7 +17,7 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	 * hashmap as this allows the condition for the if there are multiple words with the most occurrences
 	 * the first most recorded word is returned.
 	 */
-	LinkedHashMap<String, Integer> wordCount = new LinkedHashMap<>();
+	private LinkedHashMap<String, Integer> wordCount = new LinkedHashMap<>();
 	//////////////////////////////////////////////////////////////////
 
 	@Override
