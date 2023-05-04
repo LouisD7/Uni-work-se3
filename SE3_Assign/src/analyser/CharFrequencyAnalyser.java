@@ -14,7 +14,7 @@ public class CharFrequencyAnalyser extends BaseAnalyser {
 
 	/**
 	* Another use of linked hash map so the code can record the order at which characters
-	* were recorded to fill the requirment of the first most recorded character being returned as the most recorded
+	* were recorded to fill the requirement of the first most recorded character being returned as the most recorded
 	*/
 	private LinkedHashMap<Character, Integer> charCounts = new LinkedHashMap<>();
 	private int vowelCount = 0, singleCharCount = 0;

@@ -34,7 +34,6 @@ public class AnalysisResult {
 				if(word.length() > longestWord.length()) {
 					longestWord = word;
 				}
-				
 				if(word.length() < shortestWord.length() || shortestWord == "") {
 					shortestWord = word;
 				}
