@@ -7,8 +7,7 @@ package analyser;
  */
 public class AnalysisResult {
 
-	// TODO::Part1 add missing attributes (use UML model to identify these)
-
+	// attributes for the class that hold the int and strings
 	private int totalChars, wordCount, resetCount;
 	private String longestWord = "", shortestWord = "", lastWord = "";
 	
@@ -21,20 +20,21 @@ public class AnalysisResult {
 	 * recorded.
 	 * 
 	 * @param word the word to be recorded (null or empty words are ignored).
+	 * 
+	 * The two if statements check to see which word is the longest and shortest and add
+	 * them to the respective variable
 	 */
 	public void recordWord(String word) {
 		
-		
 		if(word != null) {
-			//this trims the passed in word to stop any string with just spaces from getting through the next if statement
-			word = word.trim(); 
+			word = word.trim(); //this trims the passed in word to stop any string with just spaces from getting through the next if statement
 			if(word != "") {
 				lastWord = word;
 				wordCount++;
 				if(word.length() > longestWord.length()) {
 					longestWord = word;
 				}
-				//the second check allows the shortestWord element to be changed to the first word passed through the analyser
+				
 				if(word.length() < shortestWord.length() || shortestWord == "") {
 					shortestWord = word;
 				}
@@ -49,7 +49,7 @@ public class AnalysisResult {
 	 * @return total number of characters recorded.
 	 */
 	public int getTotalChars() {
-
+		
 		return totalChars;
 	}
 
@@ -102,7 +102,7 @@ public class AnalysisResult {
 	 */
 	public String getLastWord() {
 
-		return lastWord; // TODO:Part1 return correct attribute
+		return lastWord; 
 	}
 
 	/**
@@ -110,10 +110,11 @@ public class AnalysisResult {
 	 * 
 	 * @return the average length of all recorded words. This will be 0.0 if no
 	 *         words have been recorded.
+	 *         
+	 * The if statement checks if word count is 0 and returns 0.0 if true
 	 */
 	public double getAveWordLength() {
 
-		//This if statement checks if word count is 0 and returns 0.0 if true
 		if(wordCount == 0) {
 			return 0.0;
 		}
@@ -121,7 +122,6 @@ public class AnalysisResult {
 			return ((double)totalChars / wordCount);
 		}
 	}
-
 	
 	/**
 	 * Resets the elements of the object by setting them to their original value and increments the reset count by 1

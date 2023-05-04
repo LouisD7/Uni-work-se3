@@ -15,13 +15,12 @@ import java.util.HashSet;
  */
 public class DictionaryAnalyser extends BaseAnalyser {
 
-	// TODO::Part2 add missing attributes (use UML model to identify these)
+	//sets that contain the strings for the dictionary
 	private Set<String> dictionary = new HashSet<String>();
 	private Set<String> unknownWords = new HashSet<String>();
 	private Set<String> knownWords = new HashSet<String>();
 
 	////////////////////////////////////////////////////////////////////
-
 	
 	/**
 	 * Adds words contained with the specified file into the dictionary of known
@@ -41,21 +40,19 @@ public class DictionaryAnalyser extends BaseAnalyser {
 	 * 
 	 * @param filename the name of the file containing the words to be added to the dictionary.
 	 * @throws IOException if the named file could not be found and loaded.
+	 * this while loop assigns the nextLine attribute to the next line of the file 
+	 * and then checks if the next line exists or isn't empty before going into the while loop
+	 * if statement checks the length of the trimmed line if not larger than 0 the line was just blank and doesn't get added
 	 */
 	public void addToDictionary(String filename) throws IOException {
 
 		BufferedReader reader = new BufferedReader(new FileReader(filename));
+		String nextLine = null;	
 
-		String nextLine = null;	// TODO:Part2 read the next line from the file
-
-		/**
-		 * this while loop assigns the nextLine attribute to the next line of the file 
-		 * and then checks if the next line exists or isn't empty before going into the while loop
-		 */
 		while ((nextLine = reader.readLine()) != null) {
-			// this trim trims any lines of white spaces
-			nextLine = nextLine.trim();
-			//if statement checks the length of the trimmed line if not larger than 0 the line was just blank and doesn't get added
+			
+			nextLine = nextLine.trim();// this trim trims any lines of white spaces
+			
 			if(nextLine.length() > 0) {
 				nextLine = nextLine.toLowerCase();
 				dictionary.add(nextLine);
@@ -71,14 +68,11 @@ public class DictionaryAnalyser extends BaseAnalyser {
 		knownWords.clear();
 		unknownWords.clear();
 		selectInputFile(filename);	// select the file to be analysed
-
 		String nextWord = null;
 
-		// process all available words
-		while ((nextWord = readNextWord()) != null) {
-			// TODO:Part2 identify whether next word is within the dictionary
-			// if true then record as a known word, otherwise record as an unknown word.
-			if(dictionary.contains(nextWord)) {
+		while ((nextWord = readNextWord()) != null) { // process all available words
+
+			if(dictionary.contains(nextWord)) { // if true then record as a known word, otherwise record as an unknown word.
 				knownWords.add(nextWord);
 			}
 			else {
@@ -102,7 +96,6 @@ public class DictionaryAnalyser extends BaseAnalyser {
 	 */
 	public void clearDictionary() {
 
-		// TODO:Part2 clear the dictionary contents
 		dictionary.clear();
 	}
 	
@@ -112,7 +105,7 @@ public class DictionaryAnalyser extends BaseAnalyser {
 	 */
 	public Set<String> getDictionary() {
 
-		return dictionary;	// TODO:Part2 return appropriate attribute
+		return dictionary;
 	}
 
 	/**
@@ -121,7 +114,7 @@ public class DictionaryAnalyser extends BaseAnalyser {
 	 */
 	public Set<String> getKnownWords() {
 
-		return knownWords;	// TODO:Part2 return appropriate attribute
+		return knownWords;
 	}
 
 	/**
@@ -130,7 +123,7 @@ public class DictionaryAnalyser extends BaseAnalyser {
 	 */
 	public Set<String> getUnknownWords() {
 
-		return unknownWords;	// TODO:Part2 return appropriate attribute
+		return unknownWords;
 	}
 
 	//////////////////////////////////////////////////////////////////

@@ -20,19 +20,20 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	private LinkedHashMap<String, Integer> wordCount = new LinkedHashMap<>();
 	//////////////////////////////////////////////////////////////////
 
+	/**
+	 * process all available words this while loop goes through the provided file until there's no words left and is null
+	 * check if next word known, if so increment the occurrence count, otherwise add with a count of 1
+	 */
 	@Override
 	public void performAnalysis(String filename) throws IOException {
 
-		// clear the word count
+		// clear the word count and select the file to be analysed
 		wordCount.clear();
-		selectInputFile(filename);	// select the file to be analysed
-
+		selectInputFile(filename);
 		String nextWord = null;
 
-		// process all available words this for loop goes through the provided file until there's no words left and is null
 		while ((nextWord = readNextWord())!= null) {
 			
-			//check if next word known, if so increment the occurrence count, otherwise add with a count of 1
 			if(wordCount.containsKey(nextWord)) {
 				wordCount.put(nextWord, wordCount.get(nextWord)+ 1);
 			}
@@ -58,27 +59,25 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	 * 
 	 * @return the most popular word of the most recent analysis, this will be an
 	 *         empty string if an analysis is yet to be performed.
+	 *         
+	 *  A for each loop that goes through each key string in the hashmap and check to see if wordCount is the highest recorded so
+	 *  at the end of the loop the word with highest count is returned. 
+	 *  This function is the same for get least popular word but obviously work inversely
+	 *  
+	 *  If statement in most of the getter methods check to if the count is bigger than currently recorded max.
+	 *  Since the condition is > and not >= this means that if multiple words have the highest count the first one
+	 *  recorded in the linked hash map is recorded as the most popular word
 	 */
 	public String getMostPopularWord() {
 
+		//sets all the variables 
 		int max = 0;
 		int currentCount = 0;
 		String word = "";
 		
-		
-		// TODO:Part3 find the most popular word and return
-		/**
-		 *  A for each loop that goes through each key string in the hashmap and check to see if wordCount is the highest recorded so
-		 *  at the end of the loop the word with highest count is returned. 
-		 *  This function is the same for get least popular word but obviously work inversely
-		 */
 		for(String s : wordCount.keySet()) {
 			currentCount = wordCount.get(s);
-			/**
-			 * this if statement in most of the getter methods check to if the count is bigger than currently recorded max.
-			 * Since the condition is > and not >= this means that if multiple words have the highest count the first one
-			 * recorded in the linked hash map is recorded as the most popular word
-			 */
+			
 			if(currentCount > max) {
 				max = currentCount;
 				word = s;
@@ -91,22 +90,19 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	 * Gets the number of times the most popular word(s) appeared within the most recent analysis.
 	 * 
 	 * @return the number of times the most popular word(s) appeared, 0 if an analysis is yet to be performed.
+	 * 
+	 * A for each loop that goes through each value in the hashmap and check to see if it is the highest recorded value so far
+	 * at the end of the loop the highest count is returned. This function is the same for get least word count but obviously work inversely
 	 */
 	public int getMostPopularWordCount() {
 
 		int max = 0;
 		
-		// TODO:Part3 find the most popular word count and return
-		/**
-		 *  A for each loop that goes through each value in the hashmap and check to see if it is the highest recorded value so far
-		 *  at the end of the loop the highest count is returned. This function is the same for get least word count but obviously work inversely
-		 */
 		for(Integer i : wordCount.values()) {
 			if(i > max) {
 				max = i;
 			}
 		}
-
 		return max;
 	}
 	
@@ -116,7 +112,7 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	 * If multiple words have the same least number of occurrences, then the first of these recorded should be returned.
 	 * 
 	 * @return the least popular word of the most recent analysis, this will be an
-	 *         empty string if an analysis is yet to be performed.
+	 * empty string if an analysis is yet to be performed.
 	 */
 	public String getLeastPopularWord() {
 
@@ -125,7 +121,6 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 		int currentCount = 0;
 		String word = "";
 
-		// TODO:Part3 find the least popular word and return
 		for(String s : wordCount.keySet()) {
 			currentCount = wordCount.get(s);
 			if(currentCount < min) {
@@ -147,7 +142,6 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 		int min = Integer.MAX_VALUE;
 		int result = 0;
 
-		// TODO:Part3 find the least popular word count and return
 		for(Integer i : wordCount.values()) {
 			if(i < min) {
 				min = i;
@@ -164,7 +158,7 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	 */
 	public int getUniqueWordCount() {
 
-		return wordCount.size();	// TODO:Part3 return number of entries within the word count map
+		return wordCount.size();
 	}
 	
 	/**
@@ -175,7 +169,7 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	 */
 	public int getCountOf(String word) {
 		
-		// TODO:Part3 lookup the word and return its count
+		
 		try {
 			return wordCount.get(word);
 		}
