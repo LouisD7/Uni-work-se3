@@ -18,7 +18,6 @@ public class WordFrequencyAnalyser extends BaseAnalyser  {
 	 * the first most recorded word is returned.
 	 */
 	private LinkedHashMap<String, Integer> wordCount = new LinkedHashMap<>();
-	//////////////////////////////////////////////////////////////////
 
 	/**
 	 * process all available words this while loop goes through the provided file until there's no words left and is null

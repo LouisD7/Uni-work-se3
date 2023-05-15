@@ -11,8 +11,6 @@ public class AnalysisResult {
 	private int totalChars, wordCount, resetCount;
 	private String longestWord = "", shortestWord = "", lastWord = "";
 	
-	////////////////////////////////////////////////////////////
-
 	/**
 	 * Records a word, using the information given to calculate analysis results.
 	 * 

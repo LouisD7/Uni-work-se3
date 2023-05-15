@@ -15,12 +15,9 @@ import java.util.HashSet;
  */
 public class DictionaryAnalyser extends BaseAnalyser {
 
-	//sets that contain the strings for the dictionary
 	private Set<String> dictionary = new HashSet<String>();
 	private Set<String> unknownWords = new HashSet<String>();
 	private Set<String> knownWords = new HashSet<String>();
-
-	////////////////////////////////////////////////////////////////////
 	
 	/**
 	 * Adds words contained with the specified file into the dictionary of known
@@ -125,8 +122,6 @@ public class DictionaryAnalyser extends BaseAnalyser {
 
 		return unknownWords;
 	}
-
-	//////////////////////////////////////////////////////////////////
 
 	/**
 	 * Constructor

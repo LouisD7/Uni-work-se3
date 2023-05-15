@@ -21,7 +21,6 @@ public class CharFrequencyAnalyser extends BaseAnalyser {
 	//////////////////////////////////////////////////////////////////
 	
 	/**
-	* 
 	* process all available words
 	* reset i to zero each time we go through each character in a string.
 	* 
